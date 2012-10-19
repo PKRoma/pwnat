@@ -51,16 +51,8 @@
 				<Option compiler="gcc" />
 				<Option parameters="-s" />
 				<Compiler>
-					<Add option="-flto" />
-					<Add option="-O2" />
+					<Add option="-g" />
 				</Compiler>
-				<Linker>
-					<Add option="-O2" />
-					<Add option="-flto" />
-					<Add option="-s" />
-					<Add option="-static" />
-					<Add library="Ws2_32" />
-				</Linker>
 			</Target>
 			<Target title="LinRelease">
 				<Option platforms="Unix;Mac;" />
@@ -71,7 +63,6 @@
 				<Option compiler="gcc" />
 				<Option parameters="-s" />
 				<Compiler>
-					<Add option="-flto" />
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
