@@ -56,7 +56,7 @@ typedef unsigned int uint32_t;
 			goto label;					\
 		}}
 
-//if(debug_level >= DEBUG_LEVEL1)
+/* if(debug_level >= DEBUG_LEVEL1) */
 
 #define ERROR_GOTO(cond,str,label){						\
 		if(cond) {										\

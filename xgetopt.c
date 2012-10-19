@@ -1,6 +1,6 @@
-// from http://yellosoft.svn.beanstalkapp.com/apps/IOS7Crypt/
+/* from http://yellosoft.svn.beanstalkapp.com/apps/IOS7Crypt/
 // Note: made some changes so it compiles with cl.exe
-
+//
 // XGetopt.cpp  Version 1.2
 //
 // Author:  Hans Dietrich
@@ -23,13 +23,11 @@
 // or implied warranty.  I accept no liability for any
 // damage or loss of business that this software may cause.
 //
-///////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////////*/
 #include <stdio.h>
 #include <string.h>
 #include "xgetopt.h"
-
-///////////////////////////////////////////////////////////////////////////////
+/*/////////////////////////////////////////////////////////////////////////////
 //
 //  X G e t o p t . c p p
 //
@@ -136,10 +134,9 @@
 //           return TRUE;
 //       }
 //
-///////////////////////////////////////////////////////////////////////////////
-
-char* optarg = NULL;    // global argument pointer
-int   optind = 0;     // global argv index
+/////////////////////////////////////////////////////////////////////////////*/
+char* optarg = NULL;/* global argument pointer */
+int   optind = 0;/* global argv index */
 
 int getopt(int argc, char* argv[], char* optstring)
 {
@@ -166,7 +163,7 @@ int getopt(int argc, char* argv[], char* optstring)
 			return EOF;
 		}
 		next = argv[optind];
-		next++;        // skip past -
+		next++;/* skip past - */
 		optind++;
 	}
 	c = *next++;

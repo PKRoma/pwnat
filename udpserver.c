@@ -194,8 +194,8 @@ int udpserver(int argc, char* argv[])
 	sa.sin_family = PF_INET;
 	sa.sin_port = htons(atoi(port_str));
 	sa.sin_addr.s_addr = INADDR_ANY;
-	//if( bind(sock, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in))!= 0)
-	//printf("bind failed\n");
+	/* if( bind(sock, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in))!= 0)
+	printf("bind failed\n"); */
 	int ip;
 	char* ips;
 	unsigned char* packet;
@@ -213,7 +213,7 @@ int udpserver(int argc, char* argv[])
 			/* If not ICMP and not TTL exceeded */
 			if(packet[9] != 1 || packet[20] != 11 || packet[21] != 0)
 				break;
-			//sprintf(ips, "%d.%d.%d.%d", packet[12], packet[13], packet[14], packet[15]);
+			/* sprintf(ips, "%d.%d.%d.%d", packet[12], packet[13], packet[14], packet[15]); */
 			sprintf(ips, "%d.%d.%d.%d", (unsigned char)packet[12],(unsigned char) packet[13],(unsigned char) packet[14],(unsigned char) packet[15]);
 			memset(packet, 0, ip);
 			printf("Got packet from %s\n",ips);

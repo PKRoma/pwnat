@@ -1,7 +1,7 @@
 #ifndef PACKET_T_H
 #define PACKET_T_H
 
-//	Includes
+/* Includes */
 #ifndef WIN32
 #include	<sys/unistd.h>
 #include	<sys/types.h>
@@ -12,7 +12,7 @@
 #include	<netdb.h>
 #include	<pthread.h>
 #include	<errno.h>
-//#include	<net/ethernet.h>
+/* #include	<net/ethernet.h> */
 #include	<syslog.h>
 #include	<pwd.h>
 #include	<grp.h>
@@ -39,7 +39,7 @@ struct ether_header {
 };
 #endif /* WIN32 */
 
-//	Constants
+/* Constants */
 #define	false		0
 #define	true		1
 #define	bool		char
@@ -56,7 +56,6 @@ struct ether_header {
 #define ICMPHDR_SIZE  sizeof(struct icmp_packet_t)
 #endif
 
-
 /*	ip_packet_t: This is basically my own definition of the IP packet, which
 	of course complies with the official definition ;) See any good book on IP
 	(or even the RFC) for info on the contents of this packet.
@@ -68,14 +67,13 @@ struct ip_packet_t {
 					id,
 					flags_frag_offset;
 	uint8_t			ttl,
-					proto;	// 1 for ICMP
+					proto; /* 1 for ICMP */
 	uint16_t		checksum;
 	uint32_t		src_ip,
 					dst_ip;
 };
 
-
-/*	icmp_packet_t: This is the definition of a standard ICMP header. */
+/* icmp_packet_t: This is the definition of a standard ICMP header. */
 struct icmp_packet_t {
 	uint8_t			type,
 					code;
@@ -84,9 +82,7 @@ struct icmp_packet_t {
 					seq;
 };
 
-
-
-//	Prototypes
+/* Prototypes */
 
 int send_icmp(int icmp_sock, struct sockaddr_in* rsrc, struct sockaddr_in* dest_addr, struct sockaddr_in* src_addr, int server);
 uint16_t calc_icmp_checksum(uint16_t* data, int bytes);
@@ -94,6 +90,5 @@ int create_icmp_socket();
 int create_listen_socket();
 void socket_broadcast(int sd);
 void socket_iphdrincl(int sd);
-
 
 #endif

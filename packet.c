@@ -69,20 +69,20 @@ int send_icmp(int icmp_sock, struct sockaddr_in* rsrc,  struct sockaddr_in* dest
 	packet = malloc(pkt_len);
 	memset(packet, 0, pkt_len);
 	ip_pkt = (struct ip_packet_t*)packet;
-	ip_pkt->vers_ihl = 0x45;//|(pkt_len>>2);//5;//(IPVERSION << 4) | (IPHDR_SIZE >> 2);
+	ip_pkt->vers_ihl = 0x45;/* |(pkt_len>>2);//5;//(IPVERSION << 4) | (IPHDR_SIZE >> 2); */
 	ip_pkt->tos = 0;
 	ip_pkt->pkt_len = pkt_len;
-	ip_pkt->id = 1; //kernel sets proper value htons(ip_id_counter);
+	ip_pkt->id = 1; /* kernel sets proper value htons(ip_id_counter); */
 	ip_pkt->flags_frag_offset = 0;
-	ip_pkt->ttl = IPDEFTTL; // default time to live (64)
-	ip_pkt->proto = 1; // ICMP
-	ip_pkt->checksum = 0; // maybe the kernel helps us out..?
-	ip_pkt->src_ip = rsrc->sin_addr.s_addr; // insert source IP address here
+	ip_pkt->ttl = IPDEFTTL; /* default time to live (64) */
+	ip_pkt->proto = 1; /* ICMP */
+	ip_pkt->checksum = 0; /* maybe the kernel helps us out..? */
+	ip_pkt->src_ip = rsrc->sin_addr.s_addr; /* insert source IP address here */
 	ip_pkt->dst_ip = dest_addr->sin_addr.s_addr;
 	pkt = malloc(ICMPHDR_SIZE);
 	memset(pkt, 0, ICMPHDR_SIZE);
-	pkt->type = server ? 8 : 11; // ICMP echo request or time exceeded
-	pkt->code = 0; // Must be zero
+	pkt->type = server ? 8 : 11; /* ICMP echo request or time exceeded */
+	pkt->code = 0; /* Must be zero */
 	pkt->identifier = 0;
 	pkt->seq = 0;
 	pkt->checksum = 0;
@@ -94,17 +94,17 @@ int send_icmp(int icmp_sock, struct sockaddr_in* rsrc,  struct sockaddr_in* dest
 		ip_pkt2->tos = 0;
 		/* no idea why i need to shift the bits here, but not on ip_pkt->pkt_len... */
 		ip_pkt2->pkt_len = (IPHDR_SIZE + ICMPHDR_SIZE) << 8;
-		ip_pkt2->id = 1; //kernel sets proper value htons(ip_id_counter);
+		ip_pkt2->id = 1; /* kernel sets proper value htons(ip_id_counter); */
 		ip_pkt2->flags_frag_offset = 0;
-		ip_pkt2->ttl = 1; // real TTL would be 1 on a time exceeded packet
-		ip_pkt2->proto = 1; // ICMP
-		ip_pkt2->checksum = 0; // maybe the kernel helps us out..?
-		ip_pkt2->src_ip = dest_addr->sin_addr.s_addr;//htonl(0x7f000001); // localhost..
-		ip_pkt2->dst_ip = src_addr->sin_addr.s_addr;//htonl(0x7f000001); // localhost..
+		ip_pkt2->ttl = 1; /* real TTL would be 1 on a time exceeded packet */
+		ip_pkt2->proto = 1; /* ICMP */
+		ip_pkt2->checksum = 0; /* maybe the kernel helps us out..? */
+		ip_pkt2->src_ip = dest_addr->sin_addr.s_addr;/* htonl(0x7f000001); // localhost.. */
+		ip_pkt2->dst_ip = src_addr->sin_addr.s_addr;/* htonl(0x7f000001); // localhost.. */
 		pkt2 = malloc(ICMPHDR_SIZE);
 		memset(pkt2, 0, ICMPHDR_SIZE);
-		pkt2->type = 8; // ICMP echo request
-		pkt2->code = 0; // Must be zero
+		pkt2->type = 8; /* ICMP echo request */
+		pkt2->code = 0; /* Must be zero */
 		pkt2->identifier = 0;
 		pkt2->seq = 0;
 		pkt2->checksum = 0;
@@ -120,7 +120,7 @@ int send_icmp(int icmp_sock, struct sockaddr_in* rsrc,  struct sockaddr_in* dest
 	}
 	err = sendto(icmp_sock, packet, pkt_len, 0, (struct sockaddr*)dest_addr, sizeof(struct sockaddr));
 	free(packet);
-	//err = sendto(icmp_sock, (const void*)ip_pkt, pkt_len, 0, (struct sockaddr*)dest_addr, sizeof(struct sockaddr));
+	/* err = sendto(icmp_sock, (const void*)ip_pkt, pkt_len, 0, (struct sockaddr*)dest_addr, sizeof(struct sockaddr)); */
 	if(err < 0) {
 		printf("Failed to send ICMP packet: %s\n", strerror(errno));
 		return -1;

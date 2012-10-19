@@ -1,4 +1,4 @@
-// XGetopt.h  Version 1.2
+/* XGetopt.h  Version 1.2
 //
 // Author:  Hans Dietrich
 //          hdietrich2@hotmail.com
@@ -12,14 +12,11 @@
 //
 // http://www.codeproject.com/KB/cpp/xgetopt.aspx
 //
-///////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////////////////////////////*/
 #ifndef XGETOPT_H
 #define XGETOPT_H
-
 extern int optind, opterr;
 extern char* optarg;
 
 int getopt(int argc, char* argv[], char* optstring);
-
-#endif //XGETOPT_H
+#endif/*XGETOPT_H*/

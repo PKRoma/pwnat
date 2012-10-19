@@ -36,7 +36,7 @@
 int opt_debug = 0;
 struct sockaddr_in remote;
 
-int debug_level = 1; //NO_DEBUG;
+int debug_level = 1; /* NO_DEBUG; */
 int ipver = SOCK_IPV4;
 
 int udpclient(int argc, char* argv[]);

@@ -2,7 +2,7 @@
  * From http://www.openasthra.com/c-tidbits/gettimeofday-function-for-windows/
  */
 #include <time.h>
-//#include <windows.h>
+/*#include <windows.h>*/
 #include <winsock2.h>
 
 #if defined(_MSC_VER) || defined(_MSC_EXTENSIONS)
