@@ -50,22 +50,20 @@ typedef unsigned int uint32_t;
 #define _inline_ inline
 #endif
 
-#define PERROR_GOTO(cond,err,label){        \
-        if(cond)                            \
-        {                                   \
-                perror(err) ;               \
-            goto label;                     \
-        }}
+#define PERROR_GOTO(cond,err,label){	\
+		if(cond) {						\
+			perror(err);				\
+			goto label;					\
+		}}
 
-            //if(debug_level >= DEBUG_LEVEL1)
+//if(debug_level >= DEBUG_LEVEL1)
 
-#define ERROR_GOTO(cond,str,label){                  \
-        if(cond)                                     \
-        {                                            \
-            if(debug_level >= DEBUG_LEVEL2)          \
-                fprintf(stderr, "Error: %s\n", str); \
-            goto label;                              \
-        }}
+#define ERROR_GOTO(cond,str,label){						\
+		if(cond) {										\
+			if(debug_level >= DEBUG_LEVEL2)				\
+				fprintf(stderr, "Error: %s\n", str);	\
+			goto label;									\
+		}}
 
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
@@ -73,16 +71,15 @@ typedef unsigned int uint32_t;
 #ifdef SOLARIS
 /* Copied from sys/time.h on linux system since solaris system that tried to
  * compile on didn't have timeradd macro. */
-#define timeradd(a, b, result)                                                \
-    do {                                                                      \
-        (result)->tv_sec = (a)->tv_sec + (b)->tv_sec;                         \
-        (result)->tv_usec = (a)->tv_usec + (b)->tv_usec;                      \
-        if ((result)->tv_usec >= 1000000)                                     \
-        {                                                                     \
-            ++(result)->tv_sec;                                               \
-            (result)->tv_usec -= 1000000;                                     \
-        }                                                                     \
-    } while (0)
+#define timeradd(a, b, result)							\
+	do {												\
+		(result)->tv_sec = (a)->tv_sec + (b)->tv_sec;	\
+		(result)->tv_usec = (a)->tv_usec + (b)->tv_usec;\
+		if ((result)->tv_usec >= 1000000) {				\
+			++(result)->tv_sec;							\
+			(result)->tv_usec -= 1000000;				\
+		}												\
+	} while(0)
 #endif /* SOLARIS */
 
 #endif /* COMMON_H */

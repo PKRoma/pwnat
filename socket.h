@@ -45,29 +45,29 @@
 #define SIN6(sa) ((struct sockaddr_in6 *)sa)
 
 typedef struct socket {
-    int fd;                       /* Socket file descriptor to send/recv on */
-    int type;                     /* SOCK_STREAM or SOCK_DGRAM */
-    struct sockaddr_storage addr; /* IP and port */
-    socklen_t addr_len;           /* Length of sockaddr type */
+	int fd;							/* Socket file descriptor to send/recv on */
+	int type;						/* SOCK_STREAM or SOCK_DGRAM */
+	struct sockaddr_storage addr;	/* IP and port */
+	socklen_t addr_len;				/* Length of sockaddr type */
 } socket_t;
 
 #define SOCK_FD(s) ((s)->fd)
 #define SOCK_LEN(s) ((s)->addr_len)
 #define SOCK_ADDR(s) ((struct sockaddr *)&(s)->addr)
 
-socket_t *sock_create(char *host, char *port, int ipver, int sock_type,
-                      int is_serv, int conn);
-socket_t *sock_copy(socket_t *sock);
-int sock_connect(socket_t *sock, int is_serv, char *port);
-socket_t *sock_accept(socket_t *serv);
-int sock_addr_equal(socket_t *s1, socket_t *s2);
-void sock_close(socket_t *s);
-void sock_free(socket_t *s);
+socket_t* sock_create(char* host, char* port, int ipver, int sock_type,
+					  int is_serv, int conn);
+socket_t* sock_copy(socket_t* sock);
+int sock_connect(socket_t* sock, int is_serv, char* port);
+socket_t* sock_accept(socket_t* serv);
+int sock_addr_equal(socket_t* s1, socket_t* s2);
+void sock_close(socket_t* s);
+void sock_free(socket_t* s);
 
-char *sock_get_str(socket_t *s, char *buf, int len);
-char *sock_get_addrstr(socket_t *s, char *buf, int len);
-uint16_t sock_get_port(socket_t *s);
-int sock_recv(socket_t *sock, socket_t *from, char *data, int len);
-int sock_send(socket_t *to, char *data, int len);
+char* sock_get_str(socket_t* s, char* buf, int len);
+char* sock_get_addrstr(socket_t* s, char* buf, int len);
+uint16_t sock_get_port(socket_t* s);
+int sock_recv(socket_t* sock, socket_t* from, char* data, int len);
+int sock_send(socket_t* to, char* data, int len);
 
 #endif /* SOCKET_H */

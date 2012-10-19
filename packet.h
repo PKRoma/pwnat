@@ -1,44 +1,42 @@
-
-#ifndef PACKET_T_H 
-#define PACKET_T_H 
+#ifndef PACKET_T_H
+#define PACKET_T_H
 
 //	Includes
 #ifndef WIN32
-  	#include	<sys/unistd.h>
-  	#include	<sys/types.h>
-  	#include	<sys/socket.h>
-  	#include	<netinet/in.h>
-	#include 	<limits.h>
-  	#include	<arpa/inet.h>
-  	#include	<netdb.h>
-	#include	<pthread.h>
-	#include	<errno.h>
-	//#include	<net/ethernet.h>
-	#include	<syslog.h>
-	#include	<pwd.h>
-	#include	<grp.h>
+#include	<sys/unistd.h>
+#include	<sys/types.h>
+#include	<sys/socket.h>
+#include	<netinet/in.h>
+#include 	<limits.h>
+#include	<arpa/inet.h>
+#include	<netdb.h>
+#include	<pthread.h>
+#include	<errno.h>
+//#include	<net/ethernet.h>
+#include	<syslog.h>
+#include	<pwd.h>
+#include	<grp.h>
 #endif /* !WIN32 */
-	#include	<stdarg.h>
-	#include	<unistd.h>
-  	#include	<stdio.h>
-  	#include	<stdlib.h>
-  	#include	<string.h>
-  	#include	<time.h>
-  	#include	<sys/time.h>
-  	#include	<signal.h>
-  	#include	<stdint.h>
+#include	<stdarg.h>
+#include	<unistd.h>
+#include	<stdio.h>
+#include	<stdlib.h>
+#include	<string.h>
+#include	<time.h>
+#include	<sys/time.h>
+#include	<signal.h>
+#include	<stdint.h>
 
 #ifdef WIN32
-	#include    <winsock2.h>
-	typedef int socklen_t;
-	typedef uint32_t in_addr_t;
-	#define ETH_ALEN        6               /* Octets in one ethernet addr   */
-	struct ether_header
-	{
-		u_int8_t  ether_dhost[ETH_ALEN];      /* destination eth addr */
-		u_int8_t  ether_shost[ETH_ALEN];      /* source ether addr    */
-		u_int16_t ether_type;                 /* packet type ID field */
-	};
+#include    <winsock2.h>
+typedef int socklen_t;
+typedef uint32_t in_addr_t;
+#define ETH_ALEN 6 /* Octets in one ethernet addr   */
+struct ether_header {
+	u_int8_t  ether_dhost[ETH_ALEN];	/* destination eth addr */
+	u_int8_t  ether_shost[ETH_ALEN];	/* source ether addr    */
+	u_int16_t ether_type;				/* packet type ID field */
+};
 #endif /* WIN32 */
 
 //	Constants
@@ -88,10 +86,10 @@ struct icmp_packet_t {
 
 
 
-//	Prototypes 
+//	Prototypes
 
-int send_icmp(int icmp_sock, struct sockaddr_in *rsrc, struct sockaddr_in *dest_addr, struct sockaddr_in *src_addr, int server);
-uint16_t calc_icmp_checksum(uint16_t *data, int bytes);
+int send_icmp(int icmp_sock, struct sockaddr_in* rsrc, struct sockaddr_in* dest_addr, struct sockaddr_in* src_addr, int server);
+uint16_t calc_icmp_checksum(uint16_t* data, int bytes);
 int create_icmp_socket();
 int create_listen_socket();
 void socket_broadcast(int sd);

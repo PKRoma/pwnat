@@ -27,36 +27,36 @@
 #define LIST_INIT_SIZE 10 /* Start off an array with 10 elements */
 
 typedef struct list {
-    void **obj_arr; /* Array of pointers to each object */
-    size_t obj_sz;  /* Number of bytes each individual objects takes up */
-    int num_objs;   /* Number of object pointers in the array */
-    int length;     /* Actual length of the pointer array */
+	void** obj_arr;	/* Array of pointers to each object */
+	size_t obj_sz;	/* Number of bytes each individual objects takes up */
+	int num_objs;	/* Number of object pointers in the array */
+	int length;		/* Actual length of the pointer array */
 
-    /* Function pointers to use for specific type of data types */
-    int (*obj_cmp)(const void *, const void *, size_t);
-    void* (*obj_copy)(void *, const void *, size_t);
-    void (*obj_free)(void *);
+	/* Function pointers to use for specific type of data types */
+	int (*obj_cmp)(const void*, const void*, size_t);
+	void* (*obj_copy)(void*, const void*, size_t);
+	void (*obj_free)(void*);
 } list_t;
 
 #define LIST_LEN(l) ((l)->num_objs)
 
-list_t *list_create(int obj_sz,
-                    int (*obj_cmp)(const void *, const void *, size_t),
-                    void* (*obj_copy)(void *, const void *, size_t),
-                    void (*obj_free)(void *));
-void *list_add(list_t *list, void *obj);
-void *list_get(list_t *list, void *obj);
-void *list_get_at(list_t *list, int i);
-int list_get_index(list_t *list, void *obj);
-list_t *list_copy(list_t *src);
-void list_action(list_t *list, void (*action)(void *));
-void list_delete(list_t *list, void *obj);
-void list_delete_at(list_t *list, int i);
-void list_free(list_t *list);
+list_t* list_create(int obj_sz,
+					int (*obj_cmp)(const void*, const void*, size_t),
+					void* (*obj_copy)(void*, const void*, size_t),
+					void (*obj_free)(void*));
+void* list_add(list_t* list, void* obj);
+void* list_get(list_t* list, void* obj);
+void* list_get_at(list_t* list, int i);
+int list_get_index(list_t* list, void* obj);
+list_t* list_copy(list_t* src);
+void list_action(list_t* list, void (*action)(void*));
+void list_delete(list_t* list, void* obj);
+void list_delete_at(list_t* list, int i);
+void list_free(list_t* list);
 
-static _inline_ int int_cmp(int *i, int *j, size_t sz)
+static _inline_ int int_cmp(int* i, int* j, size_t sz)
 {
-    return *i - *j;
+	return *i - *j;
 }
 
 #define p_int_cmp ((int (*)(const void *, const void *, size_t))&int_cmp)

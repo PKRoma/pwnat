@@ -39,83 +39,67 @@ struct sockaddr_in remote;
 int debug_level = 1; //NO_DEBUG;
 int ipver = SOCK_IPV4;
 
-int udpclient(int argc, char *argv[]);
-int udpserver(int argc, char *argv[]);
-void usage(char *progname);
+int udpclient(int argc, char* argv[]);
+int udpserver(int argc, char* argv[]);
+void usage(char* progname);
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    int ret;
-    int isserv = 0;
-
-#ifdef WIN32    
-    WSADATA wsa_data;
-    ret = WSAStartup(MAKEWORD(2,0), &wsa_data);
-    ERROR_GOTO(ret != 0, "WSAStartup() failed", error);
-#endif
-    
-    while((ret = getopt(argc, argv, "hscv6")) != EOF)
-    {
-        switch(ret)
-        {
-            case '6':
-                ipver = SOCK_IPV6;
-                break;
-                
-            case 's':
-                isserv = 1;
-                break;
-                
-            case 'c':
-                isserv = 0;
-                break;
-
-            case 'v':
-                if(debug_level < 3)
-                    debug_level++;
-                break;
-                
-            case 'h':
-                /* fall through */
-            default:
-                goto error;
-        }
-    }
-
-    ret = 0;
-    
-    if(isserv)
-    {
-        if(argc - optind < 0)
-            goto error;
-        ret = udpserver(argc - optind, argv + optind);
-    }
-    else
-    {
-        if(argc - optind != 5 && argc - optind != 6 && argc - optind != 4)
-            goto error;
-        ret = udpclient(argc - optind, argv + optind);
-    }
-
+	int ret;
+	int isserv = 0;
 #ifdef WIN32
-    WSACleanup();
+	WSADATA wsa_data;
+	ret = WSAStartup(MAKEWORD(2,0), &wsa_data);
+	ERROR_GOTO(ret != 0, "WSAStartup() failed", error);
 #endif
-    
-    return ret;
-    
-  error:
-    usage(argv[0]);
-    exit(1);
+	while((ret = getopt(argc, argv, "hscv6")) != EOF) {
+		switch(ret) {
+		case '6':
+			ipver = SOCK_IPV6;
+			break;
+		case 's':
+			isserv = 1;
+			break;
+		case 'c':
+			isserv = 0;
+			break;
+		case 'v':
+			if(debug_level < 3)
+				debug_level++;
+			break;
+		case 'h':
+			/* fall through */
+		default:
+			goto error;
+		}
+	}
+	ret = 0;
+	if(isserv) {
+		if(argc - optind < 0)
+			goto error;
+		ret = udpserver(argc - optind, argv + optind);
+	} else {
+		if(argc - optind != 5 && argc - optind != 6 && argc - optind != 4)
+			goto error;
+		ret = udpclient(argc - optind, argv + optind);
+	}
+#ifdef WIN32
+	WSACleanup();
+#endif
+	return ret;
+error:
+	usage(argv[0]);
+	exit(1);
 }
 
-void usage(char *progname)
+void usage(char* progname)
 {
-    printf("usage: %s <-s | -c> <args>\n", progname);
-    printf("  -c    client mode (default)\n"
-           "        <args>: [local ip] <local port> <proxy host> [proxy port (def:2222)] <remote host> <remote port>\n"
-           "  -s    server mode\n"
-           "        <args>: [local ip] [proxy port (def:2222)] [[allowed host]:[allowed port] ...]\n"
-           "  -6    use IPv6\n"
-           "  -v    show debug output (up to 2)\n"
-           "  -h    show this help and exit\n");
+	printf("usage: %s <-s | -c> <args>\n", progname);
+	printf("  -c    client mode (default)\n"
+		   "        <args>: [local ip] <local port> <proxy host> [proxy port (def:2222)] <remote host> <remote port>\n"
+		   "  -s    server mode\n"
+		   "        <args>: [local ip] [proxy port (def:2222)] [[allowed host]:[allowed port] ...]\n"
+		   "  -6    use IPv6\n"
+		   "  -v    show debug output (up to 2)\n"
+		   "  -h    show this help and exit\n");
 }

@@ -1,13 +1,13 @@
-/* 
- * $smu-mark$ 
- * $name: strLcpy.c$ 
- * $author: Nicolas Jombart <ecureuil@hsc.fr>$ 
+/*
+ * $smu-mark$
+ * $name: strLcpy.c$
+ * $author: Nicolas Jombart <ecureuil@hsc.fr>$
  * $copyright: Copyright (C) 1999 by Salvatore Sanfilippo$
- * *copyright: (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>$ 
- * $license: This software is under GPL version 2 of license$ 
- * $date: Wed Feb 13 17:02:32 CET 2002$ 
- * $rev:$ 
- */ 
+ * *copyright: (c) 1998 Todd C. Miller <Todd.Miller@courtesan.com>$
+ * $license: This software is under GPL version 2 of license$
+ * $date: Wed Feb 13 17:02:32 CET 2002$
+ * $rev:$
+ */
 
 /*      $OpenBSD: strlcpy.c,v 1.4 1999/05/01 18:56:41 millert Exp $     */
 
@@ -42,7 +42,7 @@
 
 /* This function comes from BSD */
 #if !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__) && \
-    !defined(__bsdi__) && !defined(__APPLE__)
+	!defined(__bsdi__) && !defined(__APPLE__)
 #include <sys/types.h>
 #include <string.h>
 
@@ -52,31 +52,28 @@
  * Returns strlen(src); if retval >= siz, truncation occurred.
  */
 size_t strlcpy(dst, src, siz)
-        char *dst;
-        const char *src;
-        size_t siz;
+char* dst;
+const char* src;
+size_t siz;
 {
-        register char *d = dst;
-        register const char *s = src;
-        register size_t n = siz;
-
-        /* Copy as many bytes as will fit */
-        if (n != 0 && --n != 0) {
-                do {
-                        if ((*d++ = *s++) == 0)
-                                break;
-                } while (--n != 0);
-        }
-
-        /* Not enough room in dst, add NUL and traverse rest of src */
-        if (n == 0) {
-                if (siz != 0)
-                        *d = '\0';              /* NUL-terminate dst */
-                while (*s++)
-                        ;
-        }
-
-        return(s - src - 1);    /* count does not include NUL */
+	register char* d = dst;
+	register const char* s = src;
+	register size_t n = siz;
+	/* Copy as many bytes as will fit */
+	if(n != 0 && --n != 0) {
+		do {
+			if((*d++ = *s++) == 0)
+				break;
+		} while(--n != 0);
+	}
+	/* Not enough room in dst, add NUL and traverse rest of src */
+	if(n == 0) {
+		if(siz != 0)
+			*d = '\0';              /* NUL-terminate dst */
+		while(*s++)
+			;
+	}
+	return(s - src - 1);    /* count does not include NUL */
 }
 
 #endif /* ! __*BSD__ */
