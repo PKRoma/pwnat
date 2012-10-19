@@ -103,14 +103,19 @@ int udpclient(int argc, char* argv[])
 		pport = argv[i++];
 	rhost = argv[i++];
 	rport = argv[i++];
-	/* Get address from the machine */
-	rsrc.sin_family = PF_INET;
-	rsrc.sin_addr.s_addr = INADDR_ANY;
-	if(lhost) {
+	/* Get info about localhost IP */
+	if(!lhost){
+		char szHostName[255];
+		gethostname(szHostName, 255);
+		hp = gethostbyname(szHostName);
+	}else{
 		hp = gethostbyname(lhost);
-		memcpy(&rsrc.sin_addr, hp->h_addr, hp->h_length);
-		inet_pton(AF_INET, lhost, &(rsrc.sin_addr));
 	}
+	memset(&rsrc, 0, sizeof(struct sockaddr_in));
+	timeexc_ip				= *(uint32_t*)hp->h_addr_list[0];
+	rsrc.sin_family			= AF_INET;
+	rsrc.sin_port			= 0;
+	rsrc.sin_addr.s_addr	= timeexc_ip;
 	/* IP of destination */
 	memset(&src, 0, sizeof(struct sockaddr_in));
 	hp					  = gethostbyname(phost);

@@ -40,9 +40,9 @@ OBJDIR_LINRELEASE = .obj
 DEP_LINRELEASE = 
 OUT_LINRELEASE = bin/pwnat
 
-OBJ_LINDEBUG = $(OBJDIR_LINDEBUG)/xgetopt.o $(OBJDIR_LINDEBUG)/windoze.o $(OBJDIR_LINDEBUG)/udpserver.o $(OBJDIR_LINDEBUG)/udpclient.o $(OBJDIR_LINDEBUG)/strlcpy.o $(OBJDIR_LINDEBUG)/socket.o $(OBJDIR_LINDEBUG)/pwnat.o $(OBJDIR_LINDEBUG)/packet.o $(OBJDIR_LINDEBUG)/message.o $(OBJDIR_LINDEBUG)/list.o $(OBJDIR_LINDEBUG)/destination.o $(OBJDIR_LINDEBUG)/client.o
+OBJ_LINDEBUG = $(OBJDIR_LINDEBUG)/windoze.o $(OBJDIR_LINDEBUG)/udpserver.o $(OBJDIR_LINDEBUG)/udpclient.o $(OBJDIR_LINDEBUG)/strlcpy.o $(OBJDIR_LINDEBUG)/socket.o $(OBJDIR_LINDEBUG)/pwnat.o $(OBJDIR_LINDEBUG)/packet.o $(OBJDIR_LINDEBUG)/message.o $(OBJDIR_LINDEBUG)/list.o $(OBJDIR_LINDEBUG)/destination.o $(OBJDIR_LINDEBUG)/client.o
 
-OBJ_LINRELEASE = $(OBJDIR_LINRELEASE)/xgetopt.o $(OBJDIR_LINRELEASE)/windoze.o $(OBJDIR_LINRELEASE)/udpserver.o $(OBJDIR_LINRELEASE)/udpclient.o $(OBJDIR_LINRELEASE)/strlcpy.o $(OBJDIR_LINRELEASE)/socket.o $(OBJDIR_LINRELEASE)/pwnat.o $(OBJDIR_LINRELEASE)/packet.o $(OBJDIR_LINRELEASE)/message.o $(OBJDIR_LINRELEASE)/list.o $(OBJDIR_LINRELEASE)/destination.o $(OBJDIR_LINRELEASE)/client.o
+OBJ_LINRELEASE = $(OBJDIR_LINRELEASE)/windoze.o $(OBJDIR_LINRELEASE)/udpserver.o $(OBJDIR_LINRELEASE)/udpclient.o $(OBJDIR_LINRELEASE)/strlcpy.o $(OBJDIR_LINRELEASE)/socket.o $(OBJDIR_LINRELEASE)/pwnat.o $(OBJDIR_LINRELEASE)/packet.o $(OBJDIR_LINRELEASE)/message.o $(OBJDIR_LINRELEASE)/list.o $(OBJDIR_LINRELEASE)/destination.o $(OBJDIR_LINRELEASE)/client.o
 
 all: lindebug linrelease
 
@@ -58,9 +58,6 @@ lindebug: before_lindebug out_lindebug after_lindebug
 
 out_lindebug: $(OBJ_LINDEBUG) $(DEP_LINDEBUG)
 	$(LD) $(LDFLAGS_LINDEBUG) $(LIBDIR_LINDEBUG) $(OBJ_LINDEBUG) $(LIB_LINDEBUG) -o $(OUT_LINDEBUG)
-
-$(OBJDIR_LINDEBUG)/xgetopt.o: xgetopt.c
-	$(CC) $(CFLAGS_LINDEBUG) $(INC_LINDEBUG) -c xgetopt.c -o $(OBJDIR_LINDEBUG)/xgetopt.o
 
 $(OBJDIR_LINDEBUG)/windoze.o: windoze.c
 	$(CC) $(CFLAGS_LINDEBUG) $(INC_LINDEBUG) -c windoze.c -o $(OBJDIR_LINDEBUG)/windoze.o
@@ -110,9 +107,6 @@ linrelease: before_linrelease out_linrelease after_linrelease
 
 out_linrelease: $(OBJ_LINRELEASE) $(DEP_LINRELEASE)
 	$(LD) $(LDFLAGS_LINRELEASE) $(LIBDIR_LINRELEASE) $(OBJ_LINRELEASE) $(LIB_LINRELEASE) -o $(OUT_LINRELEASE)
-
-$(OBJDIR_LINRELEASE)/xgetopt.o: xgetopt.c
-	$(CC) $(CFLAGS_LINRELEASE) $(INC_LINRELEASE) -c xgetopt.c -o $(OBJDIR_LINRELEASE)/xgetopt.o
 
 $(OBJDIR_LINRELEASE)/windoze.o: windoze.c
 	$(CC) $(CFLAGS_LINRELEASE) $(INC_LINRELEASE) -c windoze.c -o $(OBJDIR_LINRELEASE)/windoze.o

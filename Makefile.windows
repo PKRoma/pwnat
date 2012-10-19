@@ -40,9 +40,9 @@ OBJDIR_WINRELEASE = .obj
 DEP_WINRELEASE = 
 OUT_WINRELEASE = bin\pwnat.exe
 
-OBJ_WINDEBUG = $(OBJDIR_WINDEBUG)\xgetopt.o $(OBJDIR_WINDEBUG)\windoze.o $(OBJDIR_WINDEBUG)\udpserver.o $(OBJDIR_WINDEBUG)\udpclient.o $(OBJDIR_WINDEBUG)\strlcpy.o $(OBJDIR_WINDEBUG)\socket.o $(OBJDIR_WINDEBUG)\pwnat.o $(OBJDIR_WINDEBUG)\packet.o $(OBJDIR_WINDEBUG)\message.o $(OBJDIR_WINDEBUG)\list.o $(OBJDIR_WINDEBUG)\destination.o $(OBJDIR_WINDEBUG)\client.o
+OBJ_WINDEBUG = $(OBJDIR_WINDEBUG)\windoze.o $(OBJDIR_WINDEBUG)\udpserver.o $(OBJDIR_WINDEBUG)\udpclient.o $(OBJDIR_WINDEBUG)\strlcpy.o $(OBJDIR_WINDEBUG)\socket.o $(OBJDIR_WINDEBUG)\pwnat.o $(OBJDIR_WINDEBUG)\packet.o $(OBJDIR_WINDEBUG)\message.o $(OBJDIR_WINDEBUG)\list.o $(OBJDIR_WINDEBUG)\destination.o $(OBJDIR_WINDEBUG)\client.o
 
-OBJ_WINRELEASE = $(OBJDIR_WINRELEASE)\xgetopt.o $(OBJDIR_WINRELEASE)\windoze.o $(OBJDIR_WINRELEASE)\udpserver.o $(OBJDIR_WINRELEASE)\udpclient.o $(OBJDIR_WINRELEASE)\strlcpy.o $(OBJDIR_WINRELEASE)\socket.o $(OBJDIR_WINRELEASE)\pwnat.o $(OBJDIR_WINRELEASE)\packet.o $(OBJDIR_WINRELEASE)\message.o $(OBJDIR_WINRELEASE)\list.o $(OBJDIR_WINRELEASE)\destination.o $(OBJDIR_WINRELEASE)\client.o
+OBJ_WINRELEASE = $(OBJDIR_WINRELEASE)\windoze.o $(OBJDIR_WINRELEASE)\udpserver.o $(OBJDIR_WINRELEASE)\udpclient.o $(OBJDIR_WINRELEASE)\strlcpy.o $(OBJDIR_WINRELEASE)\socket.o $(OBJDIR_WINRELEASE)\pwnat.o $(OBJDIR_WINRELEASE)\packet.o $(OBJDIR_WINRELEASE)\message.o $(OBJDIR_WINRELEASE)\list.o $(OBJDIR_WINRELEASE)\destination.o $(OBJDIR_WINRELEASE)\client.o
 
 all: windebug winrelease
 
@@ -58,9 +58,6 @@ windebug: before_windebug out_windebug after_windebug
 
 out_windebug: $(OBJ_WINDEBUG) $(DEP_WINDEBUG)
 	$(LD) $(LDFLAGS_WINDEBUG) $(LIBDIR_WINDEBUG) $(OBJ_WINDEBUG) $(LIB_WINDEBUG) -o $(OUT_WINDEBUG)
-
-$(OBJDIR_WINDEBUG)\xgetopt.o: xgetopt.c
-	$(CC) $(CFLAGS_WINDEBUG) $(INC_WINDEBUG) -c xgetopt.c -o $(OBJDIR_WINDEBUG)\xgetopt.o
 
 $(OBJDIR_WINDEBUG)\windoze.o: windoze.c
 	$(CC) $(CFLAGS_WINDEBUG) $(INC_WINDEBUG) -c windoze.c -o $(OBJDIR_WINDEBUG)\windoze.o
@@ -110,9 +107,6 @@ winrelease: before_winrelease out_winrelease after_winrelease
 
 out_winrelease: $(OBJ_WINRELEASE) $(DEP_WINRELEASE)
 	$(LD) $(LDFLAGS_WINRELEASE) $(LIBDIR_WINRELEASE) $(OBJ_WINRELEASE) $(LIB_WINRELEASE) -o $(OUT_WINRELEASE)
-
-$(OBJDIR_WINRELEASE)\xgetopt.o: xgetopt.c
-	$(CC) $(CFLAGS_WINRELEASE) $(INC_WINRELEASE) -c xgetopt.c -o $(OBJDIR_WINRELEASE)\xgetopt.o
 
 $(OBJDIR_WINRELEASE)\windoze.o: windoze.c
 	$(CC) $(CFLAGS_WINRELEASE) $(INC_WINRELEASE) -c windoze.c -o $(OBJDIR_WINRELEASE)\windoze.o

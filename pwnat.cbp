@@ -9,9 +9,11 @@
 			<Target title="WinDebug">
 				<Option platforms="Windows;" />
 				<Option output="bin/debug/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
 				<Option object_output=".obj/debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-s" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -23,9 +25,11 @@
 			<Target title="WinRelease">
 				<Option platforms="Windows;" />
 				<Option output="bin/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
 				<Option object_output=".obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-s" />
 				<Compiler>
 					<Add option="-flto" />
 					<Add option="-O2" />
@@ -41,9 +45,11 @@
 			<Target title="LinDebug">
 				<Option platforms="Unix;Mac;" />
 				<Option output="bin/debug/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
 				<Option object_output=".obj/debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-s" />
 				<Compiler>
 					<Add option="-flto" />
 					<Add option="-O2" />
@@ -59,9 +65,11 @@
 			<Target title="LinRelease">
 				<Option platforms="Unix;Mac;" />
 				<Option output="bin/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin" />
 				<Option object_output=".obj" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="-s" />
 				<Compiler>
 					<Add option="-flto" />
 					<Add option="-O2" />
@@ -121,10 +129,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="windoze.h" />
-		<Unit filename="xgetopt.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="xgetopt.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

@@ -27,23 +27,7 @@
 #include	<signal.h>
 #include	<stdint.h>
 
-#ifdef _WIN32
-#	include <winsock2.h>
-typedef int socklen_t;
-typedef uint32_t in_addr_t;
-#	define ETH_ALEN 6 /* Octets in one ethernet addr   */
-struct ether_header {
-	uint8_t  ether_dhost[ETH_ALEN];	/* destination eth addr */
-	uint8_t  ether_shost[ETH_ALEN];	/* source ether addr    */
-	uint16_t ether_type;				/* packet type ID field */
-};
-#endif /* WIN32 */
-
 /* Constants */
-/*#define false		0
-#define true		1
-#define bool		char*/
-
 /* packet size (physical header size + ip header + tcp header + 0 data bytes) */
 #ifndef IP_MAX_SIZE
 #define IP_MAX_SIZE 65535
