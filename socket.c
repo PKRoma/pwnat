@@ -318,8 +318,14 @@ int sock_recv(socket_t* sock, socket_t* from, char* data, int len)
 							  SOCK_ADDR(from), &from->addr_len);
 		break;
 	}
-	PERROR_GOTO(bytes_recv < 0, "recv", error);
-	ERROR_GOTO(bytes_recv == 0, "disconnect", disconnect);
+	#ifndef _WIN32
+	PERROR_GOTO(bytes_recv<0, "recv", error);
+	#else
+	if(bytes_recv<0 && WSAGetLastError()!=WSAECONNRESET){
+		printf("WSAGetLastError: %i\n",WSAGetLastError());goto error;
+	}
+	#endif /* _WIN32 */
+	ERROR_GOTO(bytes_recv==0, "disconnect", disconnect);
 	if(debug_level >= DEBUG_LEVEL3) {
 		printf("sock_recv: type=%d, fd=%d, bytes=%d\n",
 			   sock->type, sock->fd, bytes_recv);

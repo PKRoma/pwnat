@@ -38,9 +38,6 @@
 extern int opt_debug;
 extern struct sockaddr_in remote;
 
-
-/* cl.exe has a different 'inline' keyword for some dumb reason */
-
 #define PERROR_GOTO(cond,err,label){	\
 		if(cond) {						\
 			perror(err);				\

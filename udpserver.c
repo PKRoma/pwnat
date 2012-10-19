@@ -84,8 +84,8 @@ int udpserver(int argc, char* argv[])
 	int i;
 	int allowed_start;
 	int ret;
-	int icmp_sock = 0;
-	int listen_sock = 0;
+	int icmp_sock;
+	int listen_sock;
 	int timeexc = 0;
 	struct sockaddr_in dest_addr, rsrc;
 	uint32_t timeexc_ip;
@@ -178,13 +178,13 @@ int udpserver(int argc, char* argv[])
 	check_interval.tv_sec = 0;
 	check_interval.tv_usec = 500000;
 	/* open listener socket */
-	listen_sock = create_listen_socket();
+	create_listen_socket(&listen_sock,&dest_addr);
 	if(listen_sock == -1) {
 		printf("[main] can't open listener socket\n");
 		exit(1);
 	}
 	/* open raw socket */
-	icmp_sock = create_icmp_socket();
+	create_icmp_socket(&icmp_sock);
 	if(icmp_sock == -1) {
 		printf("[main] can't open raw socket\n");
 		exit(1);
@@ -196,7 +196,7 @@ int udpserver(int argc, char* argv[])
 	sa.sin_addr.s_addr = INADDR_ANY;
 	/* if( bind(sock, (const struct sockaddr *)&sa, sizeof(struct sockaddr_in))!= 0)
 	printf("bind failed\n"); */
-	int ip;
+	int plen;
 	char* ips;
 	unsigned char* packet;
 	ips = malloc(16);
@@ -206,16 +206,16 @@ int udpserver(int argc, char* argv[])
 			timeout.tv_usec = 50000;
 		/* Every 5 seconds, send "fake" ICMP packet */
 		if(timeexc++ % 100 == 0) {
-			send_icmp(icmp_sock, &rsrc, &dest_addr, (struct sockaddr_in*)0, 1);
+			send_icmp(icmp_sock, &rsrc, &dest_addr, NULL, 1);
 		}
 		/* Wait for random client to penetrate our NAT...you nasty client! */
-		while((ip = recv(listen_sock, packet, 100, 0)) > 0) {
+		while((plen = recv(listen_sock, packet, 100, 0)) > 0) {
 			/* If not ICMP and not TTL exceeded */
-			if(packet[9] != 1 || packet[20] != 11 || packet[21] != 0)
+			if(plen!=(IPHDR_SIZE+ICMPHDR_SIZE)*2 || packet[IPHDR_SIZE+0] != 11 || packet[IPHDR_SIZE+1] != 0 || packet[IPHDR_SIZE+ICMPHDR_SIZE+9] != 1)
 				break;
 			/* sprintf(ips, "%d.%d.%d.%d", packet[12], packet[13], packet[14], packet[15]); */
 			sprintf(ips, "%d.%d.%d.%d", (unsigned char)packet[12],(unsigned char) packet[13],(unsigned char) packet[14],(unsigned char) packet[15]);
-			memset(packet, 0, ip);
+			memset(packet, 0, plen);
 			printf("Got packet from %s\n",ips);
 			host_ent = gethostbyname(ips);
 			memcpy(&(sa.sin_addr), host_ent->h_addr, host_ent->h_length);

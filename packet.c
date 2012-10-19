@@ -25,34 +25,41 @@
 #include "destination.h"
 #include "packet.h"
 
-int create_listen_socket()
+void create_listen_socket(int* listen_sock, struct sockaddr_in* dest_addr)
 {
-	int listen_sock;
-	listen_sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
-	if(listen_sock < 0) {
+	*listen_sock = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP);
+	if(*listen_sock < 0) {
 		printf("Couldn't create privileged icmp socket: %s\n", strerror(errno));
-		return 0;
+		#ifdef _WIN32
+		printf("WSAGetLastError: %i\n",WSAGetLastError());
+		#endif /* _WIN32 */
+		return;
 	}
-	if(fcntl(listen_sock, F_SETFL, O_NONBLOCK) == -1) {
+	if(fcntl(*listen_sock, F_SETFL, O_NONBLOCK) == -1) {
 		printf("F_SETFL: %s", strerror(errno));
-		return 0;
+		return;
 	}
-	return listen_sock;
+	/* work around for Windows, it doesn't allow us to read from socket before sending something... */
+	/* we could use just 1 socket for both, sending and receiving...
+	will require some rewrite since we don't have to modify the IPheader...
+	we can use setsockopt to set desired TTL... basically we can use the default ;)
+	down-side might be that our ICMP-exceeded header might look differently... eg. is smaller */
+	static char packet[ICMPHDR_SIZE];
+	memset(packet, 0, ICMPHDR_SIZE);
+	sendto(*listen_sock,packet,ICMPHDR_SIZE,0,(struct sockaddr*)dest_addr,sizeof(struct sockaddr));
 }
 
-int create_icmp_socket()
+void create_icmp_socket(int* icmp_sock)
 {
-	int icmp_sock;
-	icmp_sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
-	if(icmp_sock < 0) {
+	*icmp_sock = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+	if(*icmp_sock < 0) {
 		printf("Couldn't create privileged raw socket: %s\n", strerror(errno));
-		return 0;
+		return;
 	}
 	/* set SO_BROADCAST option */
-	socket_broadcast(icmp_sock);
+	socket_broadcast(*icmp_sock);
 	/* set SO_IPHDRINCL option */
-	socket_iphdrincl(icmp_sock);
-	return icmp_sock;
+	socket_iphdrincl(*icmp_sock);
 }
 
 /* Send an ICMP time exceeded packet */

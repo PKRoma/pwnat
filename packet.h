@@ -70,8 +70,8 @@ struct icmp_packet_t {
 
 int send_icmp(int icmp_sock, struct sockaddr_in* rsrc, struct sockaddr_in* dest_addr, struct sockaddr_in* src_addr, int server);
 uint16_t calc_icmp_checksum(uint16_t* data, int bytes);
-int create_icmp_socket();
-int create_listen_socket();
+void create_icmp_socket(int* icmp_sock);
+void create_listen_socket(int* listen_sock, struct sockaddr_in* dest_addr);
 void socket_broadcast(int sd);
 void socket_iphdrincl(int sd);
 

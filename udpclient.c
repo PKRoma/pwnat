@@ -83,8 +83,8 @@ int udpclient(int argc, char* argv[])
 	int num_fds;
 	int ret;
 	int i;
-	int icmp_sock = 0;
-	int timeexc = 0;
+	int icmp_sock ;
+	int timeexc = -1;
 	struct sockaddr_in src, dest, rsrc;
 	struct hostent* hp;
 	uint32_t timeexc_ip;
@@ -151,7 +151,7 @@ int udpclient(int argc, char* argv[])
 	check_interval.tv_usec = 500000;
 	gettimeofday(&check_time, NULL);
 	/* open raw socket */
-	icmp_sock = create_icmp_socket();
+	create_icmp_socket(&icmp_sock);
 	if(icmp_sock == -1) {
 		printf("[main] can't open raw socket\n");
 		exit(1);
@@ -159,7 +159,8 @@ int udpclient(int argc, char* argv[])
 	while(running) {
 		if(!timerisset(&timeout))
 			timeout.tv_usec = 50000;
-		if(timeexc++ % 100 == 0) {
+		if(++timeexc==100) {
+			timeexc=0;
 			/* Send ICMP TTL exceeded to penetrate remote NAT */
 			send_icmp(icmp_sock, &rsrc, &src, &dest, 0);
 		}
@@ -190,8 +191,8 @@ int udpclient(int argc, char* argv[])
 			}
 			timeradd(&curr_time, &check_interval, &check_time);
 		}
-		if(num_fds == 0)
-			continue;
+		if(num_fds == 0) continue;
+		timeexc=0;
 		/* Check if pending TCP connection to accept and create a new client
 		   and UDP connection if one is ready */
 		if(FD_ISSET(SOCK_FD(tcp_serv), &read_fds)) {
