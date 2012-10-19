@@ -24,10 +24,11 @@
 
 #include <stdio.h>
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
+#ifndef _WIN32
+#	include <sys/socket.h>
+#	include <netinet/in.h>
+#endif /*WIN32*/
 #include <limits.h>
-
 
 #define NO_DEBUG     0
 #define DEBUG_LEVEL1 1
@@ -37,18 +38,8 @@
 extern int opt_debug;
 extern struct sockaddr_in remote;
 
-#ifdef WIN32
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-#endif
 
 /* cl.exe has a different 'inline' keyword for some dumb reason */
-#ifdef WIN32
-#define _inline_ __inline
-#else
-#define _inline_ inline
-#endif
 
 #define PERROR_GOTO(cond,err,label){	\
 		if(cond) {						\

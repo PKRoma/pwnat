@@ -3,18 +3,18 @@
 #include <string.h>
 #include <signal.h>
 
-#ifndef WIN32
 #include <unistd.h>
-#include <sys/socket.h>
 #include <sys/fcntl.h>
 #include <sys/time.h>
-#include <sys/select.h>
+#ifndef _WIN32
+#	include <sys/socket.h>
+#	include <sys/select.h>
+#	include <netinet/in.h> /* IPPROTO_RAW def. */
+#	include <netinet/ip.h>
 #else
-#include "gettimeofday.h"
+#	include "windoze.h"
 #endif
 
-#include <netinet/in.h> /* IPPROTO_RAW def. */
-#include <netinet/ip.h>
 
 
 #include "common.h"

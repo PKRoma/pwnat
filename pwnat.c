@@ -24,10 +24,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef WIN32
 #include <unistd.h>
-#else
-#include "xgetopt.h"
+#ifdef _WIN32
+#	include "windoze.h"
 #endif
 
 #include "common.h"
@@ -47,7 +46,7 @@ int main(int argc, char* argv[])
 {
 	int ret;
 	int isserv = 0;
-#ifdef WIN32
+#ifdef _WIN32
 	WSADATA wsa_data;
 	ret = WSAStartup(MAKEWORD(2,0), &wsa_data);
 	ERROR_GOTO(ret != 0, "WSAStartup() failed", error);
@@ -83,7 +82,7 @@ int main(int argc, char* argv[])
 			goto error;
 		ret = udpclient(argc - optind, argv + optind);
 	}
-#ifdef WIN32
+#ifdef _WIN32
 	WSACleanup();
 #endif
 	return ret;

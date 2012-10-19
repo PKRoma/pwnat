@@ -2,20 +2,20 @@
 #define PACKET_T_H
 
 /* Includes */
-#ifndef WIN32
-#include	<sys/unistd.h>
-#include	<sys/types.h>
-#include	<sys/socket.h>
-#include	<netinet/in.h>
-#include 	<limits.h>
-#include	<arpa/inet.h>
-#include	<netdb.h>
-#include	<pthread.h>
-#include	<errno.h>
-/* #include	<net/ethernet.h> */
-#include	<syslog.h>
-#include	<pwd.h>
-#include	<grp.h>
+#include <sys/unistd.h>
+#include <sys/types.h>
+#include <limits.h>
+#include <errno.h>
+#ifndef _WIN32
+#	include <sys/socket.h>
+#	include <netinet/in.h>
+#	include <arpa/inet.h>
+#	include <netdb.h>
+#	include <pthread.h>
+/* #	include <net/ethernet.h> */
+#	include <syslog.h>
+#	include <pwd.h>
+#	include <grp.h>
 #endif /* !WIN32 */
 #include	<stdarg.h>
 #include	<unistd.h>
@@ -27,22 +27,22 @@
 #include	<signal.h>
 #include	<stdint.h>
 
-#ifdef WIN32
-#include    <winsock2.h>
+#ifdef _WIN32
+#	include <winsock2.h>
 typedef int socklen_t;
 typedef uint32_t in_addr_t;
-#define ETH_ALEN 6 /* Octets in one ethernet addr   */
+#	define ETH_ALEN 6 /* Octets in one ethernet addr   */
 struct ether_header {
-	u_int8_t  ether_dhost[ETH_ALEN];	/* destination eth addr */
-	u_int8_t  ether_shost[ETH_ALEN];	/* source ether addr    */
-	u_int16_t ether_type;				/* packet type ID field */
+	uint8_t  ether_dhost[ETH_ALEN];	/* destination eth addr */
+	uint8_t  ether_shost[ETH_ALEN];	/* source ether addr    */
+	uint16_t ether_type;				/* packet type ID field */
 };
 #endif /* WIN32 */
 
 /* Constants */
-#define	false		0
-#define	true		1
-#define	bool		char
+/*#define false		0
+#define true		1
+#define bool		char*/
 
 /* packet size (physical header size + ip header + tcp header + 0 data bytes) */
 #ifndef IP_MAX_SIZE

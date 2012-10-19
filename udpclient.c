@@ -24,20 +24,17 @@
 #include <string.h>
 #include <signal.h>
 #include <time.h>
-#include <sys/types.h>
-
-#ifndef WIN32
 #include <unistd.h>
-#include <sys/time.h>
-#include <sys/select.h>
-
 #include <inttypes.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <netdb.h>
+#include <sys/time.h>
 
+#ifndef _WIN32
+#	include <sys/select.h>
+#	include <sys/socket.h>
+#	include <arpa/inet.h>
+#	include <netdb.h>
 #else
-#include "gettimeofday.h"
+#	include "windoze.h"
 #endif
 
 #include "common.h"
@@ -265,7 +262,7 @@ int udpclient(int argc, char* argv[])
 					ret = client_send_udp_data(client);
 #if 0 /* if udptunnel is taking up 100% of cpu, try including this */
 				else if(ret == 1)
-#ifdef WIN32
+#ifdef _WIN32
 					_sleep(1);
 #else
 					usleep(1000); /* Quick hack so doesn't use 100% of CPU if

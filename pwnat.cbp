@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="pwnat" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="WinDebug">
+				<Option platforms="Windows;" />
+				<Option output="bin/debug/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".obj/debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-static" />
+					<Add library="Ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="WinRelease">
+				<Option platforms="Windows;" />
+				<Option output="bin/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-O2" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add library="Ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="LinDebug">
+				<Option platforms="Unix;Mac;" />
+				<Option output="bin/debug/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".obj/debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-O2" />
+					<Add option="-flto" />
+					<Add option="-s" />
+					<Add option="-static" />
+					<Add library="Ws2_32" />
+				</Linker>
+			</Target>
+			<Target title="LinRelease">
+				<Option platforms="Unix;Mac;" />
+				<Option output="bin/pwnat" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".obj" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-flto" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-O2" />
+					<Add option="-flto" />
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-m32" />
+		</Compiler>
+		<Linker>
+			<Add option="-m32" />
+		</Linker>
+		<Unit filename="client.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="client.h" />
+		<Unit filename="common.h" />
+		<Unit filename="destination.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="destination.h" />
+		<Unit filename="list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="list.h" />
+		<Unit filename="message.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="message.h" />
+		<Unit filename="packet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="packet.h" />
+		<Unit filename="pwnat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="socket.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="socket.h" />
+		<Unit filename="strlcpy.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="udpclient.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="udpserver.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="windoze.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="windoze.h" />
+		<Unit filename="xgetopt.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="xgetopt.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

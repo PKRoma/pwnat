@@ -54,7 +54,7 @@ void list_delete(list_t* list, void* obj);
 void list_delete_at(list_t* list, int i);
 void list_free(list_t* list);
 
-static _inline_ int int_cmp(int* i, int* j, size_t sz)
+static __inline__ int int_cmp(int* i, int* j, size_t sz)
 {
 	return *i - *j;
 }

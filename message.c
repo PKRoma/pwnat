@@ -22,9 +22,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifndef WIN32
 #include <sys/types.h>
-#include <sys/socket.h>
+#ifndef _WIN32
+#	include <sys/socket.h>
 #endif /*WIN32*/
 
 #include "common.h"
@@ -87,7 +87,7 @@ int msg_send_hello(socket_t* to, char* host, char* port, uint16_t req_id)
 	if(!data)
 		return -1;
 	*((uint16_t*)data) = htons(req_id);
-#ifdef WIN32
+#ifdef _WIN32
 	_snprintf(data + sizeof(req_id), str_len, "%s %s", host, port);
 #else
 	snprintf(data + sizeof(req_id), str_len, "%s %s", host, port);
